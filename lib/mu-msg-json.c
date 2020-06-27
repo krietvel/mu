@@ -366,12 +366,13 @@ add_parts (JsonBuilder *bob, MuMsg *msg, MuMsgOptions opts)
 	PartInfo pinfo;
 
 	pinfo.opts = opts;
-	bob	   = json_builder_set_member_name (bob, "parts");
-	bob	   = json_builder_begin_array (bob);
+	pinfo.bob  = bob;
+	pinfo.bob  = json_builder_set_member_name (pinfo.bob, "parts");
+	pinfo.bob  = json_builder_begin_array (pinfo.bob);
 
 	mu_msg_part_foreach (msg, opts, (MuMsgPartForeachFunc)each_part, &pinfo);
 
-	bob = json_builder_end_array (bob);
+	bob = json_builder_end_array (pinfo.bob);
 }
 
 static void
